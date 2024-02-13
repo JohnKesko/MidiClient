@@ -1,0 +1,63 @@
+# Object files
+*.o
+*.obj
+*.a
+*.lib
+
+# Debug files
+*.pdb
+*.dSYM/
+
+# Executable files
+*.exe
+*.out
+*.app
+*.dll
+*.so
+
+# Build directories
+build/
+bin/
+obj/
+
+# Packages
+*.package
+
+# Archive files
+*.tar
+*.tar.gz
+*.zip
+*.rar
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Autotools files
+autom4te.cache
+aclocal.m4
+Makefile.in
+configure
+depcomp
+install-sh
+missing
+
+# Compiled Binary
+*.bin
