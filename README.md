@@ -10,7 +10,7 @@ git clone https://github.com/JohnKesko/MidiClient.git
 
 2. cd MidiClient
 3. make
-4. Play on your keyboard
+4. Play on your keyboard to see notes playing (no sound)
 
 This is the bare minimum to handle MIDI on macOS.
 Because of that, we need to include both CoreMIDI and CoreFoundation during compilation.
