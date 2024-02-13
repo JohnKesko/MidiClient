@@ -1,3 +1,11 @@
+/******************
+
+    Universal MIDI Packet (UMP) Format and MIDI 2.0 Protocol:
+    https://amei.or.jp/midistandardcommittee/MIDI2.0/MIDI2.0-DOCS/M2-104-UM_v1-0_UMP_and_MIDI_2-0_Protocol_Specification.pdf
+
+*******************/
+
+
 #include <stdio.h>
 #include <CoreMIDI/CoreMIDI.h>
 
@@ -10,15 +18,23 @@ void HandleMIDIEventPacket(const MIDIEventPacket *packet)
         uint32_t word = packet->words[i];
         printf("Raw word: %08X\n", word);
 
-        // Extract Message Type from the most significant 4 bits
+        // Extract the Message Type from the most significant 4 bits of the UMP word.
+        // This is either MIDI 1.0 or 2.0
         uint8_t messageType = (word >> 28) & 0x0F;
         
         // Check if this is a MIDI 1.0 Channel Voice Message
         if (messageType == 0x2) 
         {
+            // Extract the Group field from the Most Significant Byte (MSB), masking the lower 4 bits
             uint8_t group = (word >> 24) & 0x0F;
-            uint8_t status = (word >> 16) & 0xFF; // Status includes MIDI message type and channel
+
+            // The status byte, which includes the MIDI message type and channel number
+            uint8_t status = (word >> 16) & 0xFF; 
+
+            // The actual note from keyboard
             uint8_t noteNumber = (word >> 8) & 0xFF;
+
+            // Velocity played for the specific note
             uint8_t velocity = word & 0xFF;
 
             // Interpret status for specific MIDI 1.0 messages
@@ -35,11 +51,11 @@ void HandleMIDIEventPacket(const MIDIEventPacket *packet)
             {
                 printf("Note Off: Group %d, Channel %d, Note %d\n", group, midiChannel, noteNumber);
             }
-
-            // Additional MIDI 1.0 Channel Voice Message handling can be added here
         }
-        
-        // Handling for other Message Types can be implemented similarly
+        else
+        {
+            // Handle MIDI 2.0 here
+        }
     }
 }
 
