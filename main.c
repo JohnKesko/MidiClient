@@ -15,6 +15,8 @@ void HandleMIDIEventPacket(const MIDIEventPacket *packet)
 
     for (int i = 0; i < packet->wordCount; ++i) 
     {
+        printf("MIDI 1.0\n");
+
         uint32_t word = packet->words[i];
         printf("Raw word: %08X\n", word);
 
@@ -55,6 +57,7 @@ void HandleMIDIEventPacket(const MIDIEventPacket *packet)
         else
         {
             // Handle MIDI 2.0 here
+            printf("MIDI 2.0\n");
         }
     }
 }
@@ -75,21 +78,10 @@ int main()
     MIDIReceiveBlock receiveBlock = ^(const MIDIEventList *evtlist, void *srcConnRefCon) 
     {
         const MIDIEventPacket* packet = &evtlist->packet[0];
-
-        // Handle MIDI 1.0 events
-        if (evtlist->protocol == kMIDIProtocol_1_0)
+        for (int i = 0; i < evtlist->numPackets; ++i) 
         {
-            printf("MIDI 1.0\n");
-            for (int i = 0; i < evtlist->numPackets; ++i) 
-            {
-                HandleMIDIEventPacket(packet);
-                packet = MIDIEventPacketNext(packet);
-            }
-        }
-        // Handle MIDI 2.0 events
-        else if (evtlist->protocol == kMIDIProtocol_2_0)
-        {
-            printf("MIDI 2.0\n");
+            HandleMIDIEventPacket(packet);
+            packet = MIDIEventPacketNext(packet);
         }
     };
 
