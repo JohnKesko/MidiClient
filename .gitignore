@@ -3,6 +3,7 @@
 *.obj
 *.a
 *.lib
+midiapp
 
 # Debug files
 *.pdb
