@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <CoreMIDI/CoreMIDI.h>
 
+
 void HandleMIDIEventPacket(const MIDIEventPacket *packet) 
 {
     printf("Packet timeStamp: %llu, wordCount: %u\n", packet->timeStamp, packet->wordCount);
@@ -74,7 +75,8 @@ int main()
         printf("Error creating MIDI client: %d\n", status);
         return -1;
     }
-
+    
+    // Create a MIDI input port with a callback to receive MIDI events
     MIDIReceiveBlock receiveBlock = ^(const MIDIEventList *evtlist, void *srcConnRefCon) 
     {
         const MIDIEventPacket* packet = &evtlist->packet[0];
